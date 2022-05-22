@@ -5,7 +5,7 @@ const product = require('./model/product');
 
 const dotenv = require('dotenv');
 
-
+const errorHandler = require('./middleware/error');
 
 // Setting up config file
 dotenv.config({path:  'config/config.env'})
