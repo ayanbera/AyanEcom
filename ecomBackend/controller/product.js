@@ -2,6 +2,8 @@ const Product = require('../model/product');
 
 const catchAsyncError = require('../middleware/catchAsync');
 
+const errorHandler = require('../utils/errorHandler');
+
 
 exports.createProd = catchAsyncError (async (req, res, next) => {
 
@@ -31,7 +33,7 @@ exports.getProds = async (req, res, next) => {
         const product = await Product.find();
 
      if(!product) {
-        res.status(404).send(`product not found with`);
+        return next (new errorHandler("Product not found", 404));
     }
     else {
         res.status(200).send(product)
@@ -39,7 +41,7 @@ exports.getProds = async (req, res, next) => {
     const productById = await Product.findById(req.query.id);
 
     if(!productById) {
-        res.status(404).send(`product not found with ${req.query.id}`);
+        return next (new errorHandler("Product not found", 404));
     }
     else {
         res.status(200).send(productById)
